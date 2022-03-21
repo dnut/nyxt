@@ -265,6 +265,8 @@ down.")
        :padding "6px"
        :margin-left "2px"
        :margin-right "2px")
+      (.accent
+       :background-color theme:accent)
       (|.button:hover|
        :color theme:text)
       (|.button:visited|
