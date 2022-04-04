@@ -836,7 +836,11 @@ The version number is stored in the clipboard."
                     (.button
                      :min-width "100px")
                     (.container
-                     :min-height "100%"))))
+                     :min-height "100%")
+                    (.copyright
+                     :position "absolute"
+                     :bottom "1em"
+                     :right "1em"))))
     (:div
      :class "container"
      (:nav
@@ -888,7 +892,11 @@ The version number is stored in the clipboard."
       (:p (:button :class "button accent"
                    :type "submit"
                    :onclick (ps:ps (nyxt/ps:lisp-eval '(set-url :prefill-current-url-p nil)))
-                   "Start searching!"))))))
+                   "Start searching!")))
+     (:p :class "copyright"
+         (format nil "Nyxt/~a ~a" +renderer+ +version+)
+         (:br)
+         (format nil "© Atlas Engineer LLC. ~a" (local-time:timestamp-year (local-time:now)))))))
 
 (define-internal-page-command-global manual ()
     (buffer "*Manual*" 'nyxt/help-mode:help-mode)
