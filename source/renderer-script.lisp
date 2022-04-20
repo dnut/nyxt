@@ -209,7 +209,7 @@ Objects are transformed to the hash-tables instead.")
   *json-object-accumulator*)
 
 ;; TODO: Decode arrays as vectors?
-(sera:-> decode-json (string) t)
+(sera:-> decode-json ((or string array)) t)
 (export-always 'decode-json)
 (defun decode-json (string)
   "An overridden version of `cl-json:decode-json-from-string'.
@@ -232,7 +232,10 @@ Otherwise behaves like plain `cl-json:decode-json-from-string'."
         (json:*object-key-handler* #'json-object-add-key)
         (json:*object-value-handler* #'json-object-add-value)
         (json:*end-of-object-handler* #'json-object-get))
-    (json:decode-json-from-string string)))
+    (json:decode-json-from-string
+     (typecase string
+       (string string)
+       (vector (swank/backend:utf8-to-string string))))))
 
 (sera:-> encode-json (t) (values string &optional))
 (export-always 'encode-json)
